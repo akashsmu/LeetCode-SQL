@@ -1,0 +1,8 @@
+select demo.id, count(*) as num from (
+    select requester_id id from requestaccepted
+    union all
+    select accepter_id id from requestaccepted
+) as demo
+group by 1
+order by 2 desc
+limit 1
