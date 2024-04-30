@@ -1,0 +1,7 @@
+select Request_at Day,
+round(sum(if(status='cancelled_by_driver' or status='cancelled_by_client',1,0))/count(*),2) 'Cancellation Rate'
+from trips
+where client_id not in (select distinct(users_id) from users where banned='Yes' and role='client') and
+driver_id not in (select distinct(users_id) from users where banned='Yes' and role = 'driver') and
+request_at between '2013-10-01' and '2013-10-03'
+group by request_at
